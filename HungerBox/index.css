@@ -1,12 +1,21 @@
-#root{
-    background-color: yellow;
-    color: black;
+#header{
+    display: flex;
+    margin: 10px;
+    justify-content: space-between;
+    border: 2px solid black;
 }
-#a{
-    background-color: red;
-    color: yellow;
+
+.logo{
+    width: 100px;
+    height: auto;
 }
-#b{
-    background-color: pink;
-    color: green;
+
+#header > ul{
+    display: flex;
+    list-style-type: none;
+}
+
+#header > ul > li{
+    padding: 10px;
+    font-size: large;
 }
