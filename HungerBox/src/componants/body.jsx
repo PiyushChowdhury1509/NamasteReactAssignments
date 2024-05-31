@@ -1,29 +1,48 @@
-import { useState } from "react";
-import { restaurant } from "../constants/restaurant_infoapi";
+import { useState, useEffect } from "react";
+import { swiggyapi } from "../constants/restaurant_list_api";
 
-const FoodCard = ({ image, name, rating, type }) => {
+const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
+const targetUrl = swiggyapi;
+
+const RestaurantCard = ({ name, cloudinaryImageId, locality, avgRating }) => {
     return (
-        <div id="foodcard">
-            <img src={image} alt={name} />
+        <div className="restaurant-card">
+            <img src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/"+cloudinaryImageId} alt={name} />
             <h2>{name}</h2>
-            <h3>{rating} stars</h3>
-            <h3>{type}</h3>
+            <h3>{locality}</h3>
+            <h4>{avgRating}</h4>
         </div>
     );
 };
 
 export const Body = () => {
-    const [searchText, setSearchText] = useState("");
-    const [filterItems, setFilterItems] = useState(restaurant);
+    const [restaurants, setRestaurants] = useState([]);
+    const [inputText, setInputText] = useState("");
+    const [filteredInfo, setFilteredInfo] = useState([]);
 
-    const handleSearch = () => {
-        const filtered = restaurant.filter((item) => {
-            if (item.name) {
-                return item.name.toLowerCase().includes(searchText.toLowerCase());
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(proxyUrl + targetUrl);
+                const json = await response.json();
+                console.log("Fetched Data:", json); // Log the fetched data to check its structure
+                const restaurantData = json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants.map(rest => 
+                    rest.info
+                );
+                setRestaurants(restaurantData);
+                setFilteredInfo(restaurantData);
+            } catch (error) {
+                console.error("Error fetching the data: ", error);
             }
-            return false;
+        };
+        fetchData();
+    }, []);
+
+    const filterData = () => {
+        const filtered = restaurants.filter((restaurant) => {
+            return restaurant.name?.toLowerCase().includes(inputText.toLowerCase());
         });
-        setFilterItems(filtered);
+        setFilteredInfo(filtered);
     };
 
     return (
@@ -32,15 +51,17 @@ export const Body = () => {
                 <input
                     type="text"
                     placeholder="cravings?"
-                    className="search-box"
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
+                    value={inputText}
+                    onChange={(e) => {
+                        setInputText(e.target.value);
+                        filterData();
+                    }}
                 />
-                <button id="search-button" onClick={handleSearch}>search</button>
+                <button onClick={filterData}>Search</button>
             </div>
-            <div id="body">
-                {filterItems.map((rest) => (
-                    <FoodCard key={rest.name} {...rest} />
+            <div id="card-container">
+                {filteredInfo.map((rest, index) => (
+                    <RestaurantCard key={index} {...rest} />
                 ))}
             </div>
         </>
