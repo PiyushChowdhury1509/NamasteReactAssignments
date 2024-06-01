@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { swiggyapi } from "../constants/restaurant_list_api";
+import { proxyUrl } from "../constants/restaurant_list_api";
 import ShimmerUI from "./shimmerUi";
 
-const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
+
 const targetUrl = swiggyapi;
 
 const RestaurantCard = ({ name, cloudinaryImageId, locality, avgRating }) => {
