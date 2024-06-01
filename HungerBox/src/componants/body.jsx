@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { swiggyapi } from "../constants/restaurant_list_api";
 import { proxyUrl } from "../constants/restaurant_list_api";
+import { Link } from "react-router-dom";
 import ShimmerUI from "./shimmerUi";
 
 
@@ -27,7 +28,6 @@ export const Body = () => {
             try {
                 const response = await fetch(proxyUrl + targetUrl);
                 const json = await response.json();
-                console.log(json);
                 const restaurantData = json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants.map(rest => 
                     rest.info
                 );
@@ -61,9 +61,10 @@ export const Body = () => {
                 />
                 <button onClick={filterData}>Search</button>
             </div>
+            {console.log(filteredInfo)}
             <div id="card-container">
                 {filteredInfo.map((rest, index) => (
-                    <RestaurantCard key={index} {...rest} />
+                    <Link to={"/"+rest.id}><RestaurantCard key={index} {...rest}/></Link>
                 ))}
             </div>
         </>

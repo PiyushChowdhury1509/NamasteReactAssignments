@@ -5,6 +5,7 @@ import { Body } from "./src/componants/body";
 import { Footer } from "./src/componants/footer";
 import AboutUs from "./src/componants/aboutUs";
 import Contact from "./src/componants/contact";
+import RestaurantMenu from "./src/componants/restaurantMenu";
 import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
 import { Outlet } from "react-router-dom";
@@ -36,6 +37,10 @@ const appRouter=createBrowserRouter([
             {
                 path: "/contact",
                 element: <Contact/>
+            },
+            {
+                path: "/:id",
+                element: <RestaurantMenu/>
             }
         ]
     }
