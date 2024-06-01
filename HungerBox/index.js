@@ -3,16 +3,43 @@ import ReactDom from "react-dom/client";
 import { Header } from "./src/componants/header";
 import { Body } from "./src/componants/body";
 import { Footer } from "./src/componants/footer";
+import AboutUs from "./src/componants/aboutUs";
+import Contact from "./src/componants/contact";
+import { createBrowserRouter } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const AppLayout = () => {
     return (
         <React.Fragment>
             <Header />
-            <Body />
+            <Outlet />
             <Footer />
         </React.Fragment>
     );
 };
 
+const appRouter=createBrowserRouter([
+    {
+        path: "/",
+        element: <AppLayout/>,
+
+        children:[
+            {
+                path: "/",
+                element: <Body/>
+            },
+            {
+                path: "/aboutus",
+                element:<AboutUs/>
+            },
+            {
+                path: "/contact",
+                element: <Contact/>
+            }
+        ]
+    }
+])
+
 const root = ReactDom.createRoot(document.getElementById("root"));
-root.render(<AppLayout />);
+root.render(<RouterProvider router={appRouter}/>);

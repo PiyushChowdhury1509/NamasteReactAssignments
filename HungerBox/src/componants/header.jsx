@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Logo=()=>{
     return(
@@ -12,10 +13,9 @@ export const Header=()=>{
         <div id="header">
             <Logo/>
             <ul>
-                <li>Home</li>
-                <li>About us</li>
-                <li>Contact</li>
-                <li>Cart</li>
+                <li><Link to={"/"}>Home</Link></li>
+                <li><Link to={"./aboutus"}>About us</Link></li>
+                <li><Link to={"./contact"}>Contact</Link></li>
             </ul>
             {(auth) ? (<button onClick={()=> setAuth(false)}>Login</button>):(<button onClick={()=> setAuth(true)}>Logout</button>)}
         </div>
