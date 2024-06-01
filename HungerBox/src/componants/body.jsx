@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { swiggyapi } from "../constants/restaurant_list_api";
+import ShimmerUI from "./shimmerUi";
 
 const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
 const targetUrl = swiggyapi;
@@ -25,7 +26,7 @@ export const Body = () => {
             try {
                 const response = await fetch(proxyUrl + targetUrl);
                 const json = await response.json();
-                console.log("Fetched Data:", json); // Log the fetched data to check its structure
+                console.log(json);
                 const restaurantData = json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants.map(rest => 
                     rest.info
                 );
@@ -45,7 +46,7 @@ export const Body = () => {
         setFilteredInfo(filtered);
     };
 
-    return (
+    return restaurants.length===0 ? (<ShimmerUI/>) : (
         <>
             <div id="search-bar">
                 <input
