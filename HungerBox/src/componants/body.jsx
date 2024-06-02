@@ -64,7 +64,7 @@ export const Body = () => {
             {console.log(filteredInfo)}
             <div id="card-container">
                 {filteredInfo.map((rest, index) => (
-                    <Link to={"/"+rest.id}><RestaurantCard key={index} {...rest}/></Link>
+                    <Link to={rest.id}><RestaurantCard key={index} {...rest}/></Link>
                 ))}
             </div>
         </>

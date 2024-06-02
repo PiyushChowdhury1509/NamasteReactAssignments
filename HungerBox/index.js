@@ -5,6 +5,7 @@ import { Body } from "./src/componants/body";
 import { Footer } from "./src/componants/footer";
 import AboutUs from "./src/componants/aboutUs";
 import Contact from "./src/componants/contact";
+import Login from "./src/componants/login";
 import RestaurantMenu from "./src/componants/restaurantMenu";
 import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
@@ -23,23 +24,27 @@ const AppLayout = () => {
 const appRouter=createBrowserRouter([
     {
         path: "/",
+        element: <Login/>
+    },
+    {
+        path: "/home",
         element: <AppLayout/>,
 
         children:[
             {
-                path: "/",
+                path: "",
                 element: <Body/>
             },
             {
-                path: "/aboutus",
+                path: "aboutus",
                 element:<AboutUs/>
             },
             {
-                path: "/contact",
+                path: "contact",
                 element: <Contact/>
             },
             {
-                path: "/:id",
+                path: ":id",
                 element: <RestaurantMenu/>
             }
         ]
