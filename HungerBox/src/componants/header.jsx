@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import useOnline from "./isOnline";
 
 const Logo=()=>{
     return(
@@ -12,11 +13,17 @@ export const Header=()=>{
     return(
         <div id="header">
             <Logo/>
+
             <ul>
                 <li><Link to={"/home"}>Home</Link></li>
                 <li><Link to={"./aboutus"}>About us</Link></li>
                 <li><Link to={"./contact"}>Contact</Link></li>
             </ul>
+
+            <div id="onlineButton">
+                {(useOnline()) ? (<h4>Online</h4>):(<h4>Offline</h4>)}
+            </div>
+
             {(auth) ? (<button onClick={()=> setAuth(false)}>Login</button>):(<button onClick={()=> setAuth(true)}>Logout</button>)}
         </div>
     )
