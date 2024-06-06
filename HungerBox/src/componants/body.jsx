@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { swiggyapi } from "../constants/restaurant_list_api";
 import { proxyUrl } from "../constants/restaurant_list_api";
 import { Link } from "react-router-dom";
 import ShimmerUI from "./shimmerUi";
-
+import UserContext from "../constants/userContext";
 
 const targetUrl = swiggyapi;
 
@@ -19,6 +19,7 @@ const RestaurantCard = ({ name, cloudinaryImageId, locality, avgRating }) => {
 };
 
 export const Body = () => {
+    const {user,setUser}=useContext(UserContext);
     const [restaurants, setRestaurants] = useState([]);
     const [inputText, setInputText] = useState("");
     const [filteredInfo, setFilteredInfo] = useState([]);
@@ -61,7 +62,16 @@ export const Body = () => {
                 />
                 <button onClick={filterData}>Search</button>
             </div>
-            {console.log(filteredInfo)}
+
+            <div className="changeUserContext">
+                    <input type="text" input={user.name} onChange={(e)=>{
+                        setUser({
+                            name:e.target.value,
+                            email:"new email"
+                        });
+                    }}/>
+            </div>
+
             <div id="card-container">
                 {filteredInfo.map((rest, index) => (
                     <Link to={rest.id}><RestaurantCard key={index} {...rest}/></Link>
